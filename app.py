@@ -5,8 +5,36 @@ import re
 from docx.shared import Pt, RGBColor, Mm
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 import io # Used for in-memory file handling
+import base64
 
 st.set_page_config(layout="centered", page_title="Transfer Routes Printer")
+
+# --- Background Image ---
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+bg_image_data = get_base64_image("wallpaper.png")
+st.markdown(
+    f"""
+    <style>
+        .stApp {{
+            background-image: url('data:image/png;base64,{bg_image_data}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }}
+        .stApp > [data-testid="stAppViewContainer"] {{
+            background-color: rgba(255, 255, 255, 0.70);
+        }}
+        body, .stMarkdown, .stButton, .stSelectbox, .stTextInput, h1, h2, h3, p {{
+            color: black !important;
+        }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.title('Transfer-inator')
 st.write('Upload your Travel Plans spreadsheet (.csv) to generate a word doc.')
