@@ -5,6 +5,9 @@ on:
     - cron: '0 12 1 * *'  # Runs on the 1st of every month
   workflow_dispatch:       # Also lets you trigger it manually
 
+permissions:
+  contents: write #Allows the workflow to push commits
+
 jobs:
   keep-alive:
     runs-on: ubuntu-latest
